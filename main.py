@@ -12,11 +12,17 @@ def main():
 Takes in a book file path and returns only the name of the .txt file in the path
 """
 def get_book_title(book_path):
-    cutoff = 0
-    #All books stored in same directory -> books/
-    while book_path[cutoff] != "/":
-        cutoff += 1
-    return book_path[cutoff + 1:]
+    left_cutoff = 0
+    #Removes the file path from the book.txt file
+    while book_path[left_cutoff] != "/":
+        left_cutoff += 1
+
+    right_cutoff = left_cutoff + 1
+    #Removes the ".txt." from the file
+    while book_path[right_cutoff] != ".":
+        right_cutoff += 1
+
+    return book_path[left_cutoff + 1 : right_cutoff]
 
 """
 Takes in a book string as input and returns how many words are in the book
