@@ -47,7 +47,7 @@ Given a word, return the number of times that word occurs in the book
 """
 def num_times_appears(book):
     word = input("Which word would you like to search for?\n")
-    while not is_valid_word(word):
+    while not_valid_word(word):
         print("Words can only contain letters of the alphabet and cannot have spaces")
         word = input("Enter new a word\n")
     words = book.split()
@@ -61,8 +61,8 @@ def num_times_appears(book):
 Takes in a user-given word and determines if it as a valid word, e.g
 no numbers or non-letter chars.
 """
-def is_valid_word(word):
-    return word.isalpha()
+def not_valid_word(word):
+    return not word.isalpha()
 
 
 
