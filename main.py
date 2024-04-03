@@ -1,12 +1,51 @@
+import sys
+
+
 def main():
-    selected_book = "books/frankenstein.txt"
-    with open(selected_book) as file:
-        book_contents = file.read()
-
-    book_name = get_book_title(selected_book)
-
+    book_contents, book_name = read_file()
     print_report(book_contents, book_name)
     num_times_appears(book_contents)
+
+
+"""
+Take in a file as input and return a string containing the contents of the file,
+as well as the title of the file/book.
+
+"""
+def read_file():
+    #Attempt to open the file given by the user
+    while True:
+        filename = input("Please enter the relative file path to the file you would like to read. \n ")
+        if file_exists(filename):
+            break
+    
+    try:
+        with open(filename) as file:
+            book_contents = file.read()
+    except Exception as e:
+        print("Error:", e)
+        sys.exit(1)
+
+    book_title = get_book_title(filename)
+    return book_contents, book_title
+
+
+"""
+Determines if a user provided file exists, and returns false if it does not.
+"""
+def file_exists(filename):
+    try:
+        with open(filename) as f:
+            pass
+    except FileNotFoundError:
+        print("File not found.")
+        return False
+    except Exception as e:
+        print("Error:", e)
+        return False
+    return True
+
+
 
 """
 Takes in a book file path and returns only the name of the .txt file in the path
@@ -48,14 +87,17 @@ Given a word, return the number of times that word occurs in the book
 def num_times_appears(book):
     word = input("Which word would you like to search for?\n")
     while not_valid_word(word):
-        print("Words can only contain letters of the alphabet and cannot have spaces")
+        print("Words can only contain letters of the alphabet and cannot have spaces.")
         word = input("Enter new a word\n")
+    #Separate the words in the string into a list
     words = book.split()
     counts = dict()
     for wrd in words:
         counts[wrd.lower()] = counts.get(wrd.lower(), 0) + 1
     
     print(f"The word '{word}' appears {counts.get(word.lower(), 0)} times in this text.\n")
+
+
     
 """
 Takes in a user-given word and determines if it as a valid word, e.g
